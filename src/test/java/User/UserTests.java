@@ -10,6 +10,7 @@ import io.restassured.specification.RequestSpecification;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.config.LogConfig.logConfig;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 
 
@@ -38,14 +39,15 @@ public class UserTests {
 
     @BeforeEach
     void setRequest() {
-        request = given()
+        request = given().config(RestAssured.config().logConfig(logConfig().enableLoggingOfRequestAndResponseIfValidationFails()))
                 .header("api-key", "special-key")
                 .contentType(ContentType.JSON);
 
     }
 
     @Test
-    public void CreateNewUser_WithValidData_ReturnOK(){
+    @Order(1)
+    public void CreateNewUser_WithValidData_ReturnOK() {
 
         request
                 .body(user)
@@ -60,5 +62,44 @@ public class UserTests {
 
     }
 
+    @Test
+    @Order(2)
+    public void GetLogin_ValidUser_ReturnOK() {
 
+        request
+                .param("username", user.getUsername())
+                .param("password", user.getPassword())
+                .when()
+                .get("/user/login")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .and().time(lessThan(2000L))
+                .and().body(matchesJsonSchemaInClasspath("loginResponseSchema.json"));
+    }
+
+    @Test
+    @Order(3)
+    public void GetUserByUsername_userIsValid_Return200() {
+
+        request
+                .when()
+                .get("/user" + user.getUsername())
+                .then()
+                .assertThat().statusCode(200).and().time(lessThan(2000L))
+                .and().body("firstName", equalTo(user.getFirstName()));
+        }
+
+    @Test
+    @Order(4)
+    public void DeleteUser_UserExistis_Return200() {
+
+        request
+                .when()
+                .delete("/user" + user.getUsername())
+                .then()
+                .assertThat().statusCode(200).and().time(lessThan(2000L))
+                .log();
+    }
 }
+
