@@ -7,6 +7,47 @@
 	},
 	"item": [
 		{
+			"name": "Get Token",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get Booking with Id's",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/booking/1085",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"booking",
+						"1085"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1085",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Booking",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
 			"name": "Create Book",
 			"request": {
 				"auth": {
@@ -37,49 +78,6 @@
 					],
 					"path": [
 						"booking"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Booking",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/booking/1085",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"booking",
-						"1085"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "1085",
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Booking",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/booking/1085",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"booking",
-						"1085"
 					]
 				}
 			},
@@ -117,6 +115,24 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Delete Booking",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/booking/1085",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"booking",
+						"1085"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -144,6 +160,10 @@
 			"key": "base_url",
 			"value": "https://restful-booker.herokuapp.com",
 			"type": "string"
+		},
+		{
+			"key": "passAuth",
+			"value": "1234"
 		}
 	]
 }
