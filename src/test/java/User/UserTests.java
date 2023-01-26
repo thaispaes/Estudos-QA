@@ -1,11 +1,10 @@
 package User;
 
-import Entities.User;
+import EntitiesSwagger.User;
 import org.junit.jupiter.api.*;
 import com.github.javafaker.Faker;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 import static io.restassured.RestAssured.given;
